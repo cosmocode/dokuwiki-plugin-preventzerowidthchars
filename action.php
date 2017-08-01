@@ -18,9 +18,7 @@ class action_plugin_preventzerowidthchars extends DokuWiki_Action_Plugin {
      * @return void
      */
     public function register(Doku_Event_Handler $controller) {
-
-       $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'FIXME', $this, 'handle_common_wikipage_save');
-   
+       $controller->register_hook('COMMON_WIKIPAGE_SAVE', 'BEFORE', $this, 'handle_common_wikipage_save');
     }
 
     /**
@@ -32,7 +30,16 @@ class action_plugin_preventzerowidthchars extends DokuWiki_Action_Plugin {
      * @return void
      */
 
-    public function handle_common_wikipage_save(Doku_Event &$event, $param) {
+    public function handle_common_wikipage_save(Doku_Event $event, $param) {
+        $event->data['newContent'] = $this->replaceZeroWidthChars($event->data['newContent']);
+    }
+
+
+    public function replaceZeroWidthChars($uncleanText) {
+        $cleanedText = strtr($uncleanText, [
+            "\xE2\x80\x8B" => '', // zero width space
+        ]);
+        return $cleanedText;
     }
 
 }
