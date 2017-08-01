@@ -1,0 +1,7 @@
+base   preventzerowidthchars
+author Michael Große
+email  grosse@cosmocode.de
+date   2017-08-01
+name   preventzerowidthchars plugin
+desc   Remove all zero-width-chars from text that is to be saved
+url    https://dokuwiki.org/plugin:preventzerowidthchars
